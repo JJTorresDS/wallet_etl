@@ -61,7 +61,7 @@ def get_connection():
 def ensure_table(conn):
     """Create the prices table if it doesn't exist yet."""
     ddl = """
-    CREATE TABLE IF NOT EXISTS usdc_ars_prices (
+    CREATE TABLE IF NOT EXISTS public.usdc_ars_prices (
         id          SERIAL PRIMARY KEY,
         fetched_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
         total_bid   NUMERIC(18, 6),
@@ -88,7 +88,7 @@ def unix_to_dt(unix_ts):
 
 def insert_price(conn, payload: dict):
     sql = """
-    INSERT INTO usdc_ars_prices (fetched_at, total_bid, total_ask, api_time, raw_response)
+    INSERT INTO public.usdc_ars_prices (fetched_at, total_bid, total_ask, api_time, raw_response)
     VALUES (%s, %s, %s, %s, %s)
     RETURNING id;
     """
